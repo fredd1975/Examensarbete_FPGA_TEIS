@@ -1,1 +1,11 @@
+.DS_Store
+.vscode/
+work/
+*.log
+*.vcd
+*.wlf
+*.cf
+*.ghw
+*.tmp
+*.bak
 
