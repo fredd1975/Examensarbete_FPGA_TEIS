@@ -180,8 +180,9 @@ begin
          );
 
   -- ===============================================================
-  -- Passive monitor (all-INPUTS, VHDL-93)
+  -- Passive monitor (synthesis translate on/off to use for Sim only)
   -- ===============================================================
+   -- synthesis translate_off
    u_mon : entity work.monitor_proc
       port map (
        -- Clock / reset
@@ -210,8 +211,7 @@ begin
        -- NEW: feed the parser’s opcode
       tftp_opcode    => (others => '0')  --disables op-code print
      );
-
-
+   -- synthesis translate_on
 
   -- ===============================================================
   -- Simple byte ROM for the TFTP server image (1-cycle sync)
