@@ -20,6 +20,10 @@
 --   * UDP header:              8 bytes
 --   * TFTP RRQ payload:    2B opcode (0001) + filename\0 + mode\0
 --   * TFTP ACK payload:    2B opcode (0004) + 2B block
+--
+-- Added comment: Many unused signals are in the code structure, removing them would 
+--                break the logic. Instead, I choose to add a debug signal and bind
+--                these so that they might be used in a future expansion.
 --==========================================================================
 
 library ieee;
@@ -64,8 +68,9 @@ entity tftp_client_fsm is
       stat_ack_sent  : out unsigned(31 downto 0);     -- TFTP ACK frames sent
       stat_active    : out std_logic;                 -- Status signal ('1' while FSM active)
 
-      -- Debug (help State Machine Viewer)
-      dbg_tx_state : out std_logic_vector(3 downto 0)
+      -- Debug
+      dbg_tx_state  : out std_logic_vector(3 downto 0);  -- debug signal for FSM
+      dbg_rx_header : out std_logic_vector(31 downto 0)  -- debug bus for unused signals
    );
 end entity;
 
@@ -166,6 +171,14 @@ architecture rtl of tftp_client_fsm is
    constant ACK_IP_LEN   : unsigned(15 downto 0) := to_u16(20 + 8 + 4);
 
 begin
+   
+   ---------------------------------------------------------------------------
+   -- Unused signals (for future exchange)
+   ---------------------------------------------------------------------------
+   dbg_rx_header(15 downto 0)   <= r_ethertype;                    -- 16 bits
+   dbg_rx_header(23 downto 16)  <= r_ip_proto;                     -- 8 bits
+   dbg_rx_header(31 downto 24)  <= r_udp_dst_port(7 downto 0);     -- 8 bits
+
    --------------------------------------------------------------------------
    -- Output mappings
    --------------------------------------------------------------------------
