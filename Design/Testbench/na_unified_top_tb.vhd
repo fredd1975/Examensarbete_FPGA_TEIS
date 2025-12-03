@@ -42,13 +42,14 @@ architecture sim of na_unified_top_tb is
    -------------------------------------------------------------------------
    -- DUT interface signals
    -------------------------------------------------------------------------
-   signal clk_50    : std_logic := '0';
-   signal rst_n     : std_logic := '0';
-   signal sw0       : std_logic := '0';
-   signal test_fail : std_logic := '0';
-   signal sw1       : std_logic := '0';
-   signal led_pass  : std_logic;
-   signal led_fail  : std_logic;
+   signal clk_50      : std_logic := '0';
+   signal rst_n       : std_logic := '0';
+   signal sw0         : std_logic := '0';
+   signal test_fail   : std_logic := '0';
+   signal sw1         : std_logic := '0';
+   signal led_pass    : std_logic;
+   signal led_fail    : std_logic;
+   signal debug_bus_o : std_logic_vector(31 downto 0);
 
 begin
 
@@ -65,12 +66,13 @@ begin
          G_WD_BITS => 18   -- shorter watchdog for simulation
       )
       port map (
-         clk_50    => clk_50,
-         rst_n     => rst_n,
-         sw0       => sw0,
-         sw1       => sw1,
-         led_pass  => led_pass,
-         led_fail  => led_fail
+         clk_50      => clk_50,
+         rst_n       => rst_n,
+         sw0         => sw0,
+         sw1         => sw1,
+         led_pass    => led_pass,
+         led_fail    => led_fail,
+         debug_bus_o => debug_bus_o
       );
 
    -------------------------------------------------------------------------
@@ -225,3 +227,4 @@ begin
 
 
 end architecture sim;
+
